@@ -1,3 +1,13 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  root 'pages#index' 
+
+  namespace :api do 
+    namespace :v1 do 
+      resources :airlines, param: :slug
+      resources :reviews, only: [:create, :destroy]
+    end
+  end
+
+  get '*path', to: 'pages#index', via: :all  # This will route requests that are not predefined in our API back to our index path.
+                                            # This helps react routing not interfere with our API routing.  
 end
